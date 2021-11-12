@@ -8,6 +8,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import music.Music;
 import screen.GameScreen;
 import screen.HighScoreScreen;
 import screen.ScoreScreen;
@@ -81,6 +82,10 @@ public final class Core {
 	 */
 	public static void main(final String[] args) {
 		try {
+			
+			Music introMusic = new Music ("introMusic.mp3",true);
+			introMusic.start();
+			
 			LOGGER.setUseParentHandlers(false);
 
 			fileHandler = new FileHandler("log");

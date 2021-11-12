@@ -5,6 +5,7 @@ import java.util.Set;
 
 import engine.Cooldown;
 import engine.Core;
+import music.Music;
 import engine.DrawManager.SpriteType;
 
 /**
@@ -91,6 +92,9 @@ public class Ship extends Entity {
 	 */
 	public final void destroy() {
 		this.destructionCooldown.reset();
+		
+		Music effect2 = new Music ("effect2.mp3",false);
+		effect2.start();
 	}
 
 	/**
