@@ -17,8 +17,7 @@ public class Music extends Thread {
     public Music(String name, boolean isloop) {
         try {
             this.isloop=isloop;
-            file = new File(".\\src\\music\\"+ name);
-            new File("").getCanonicalPath();
+            file = new File("./src/music/"+ name);
             fis = new FileInputStream(file);
             bis = new BufferedInputStream(fis);
             player = new Player(bis);
