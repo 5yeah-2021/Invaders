@@ -13,6 +13,7 @@ import engine.Core;
 import engine.DrawManager;
 import engine.DrawManager.SpriteType;
 import engine.GameSettings;
+import music.Music;
 
 /**
  * Groups enemy ships into a formation that moves together.
@@ -355,6 +356,9 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 					column.get(i).destroy();
 					this.logger.info("Destroyed ship in ("
 							+ this.enemyShips.indexOf(column) + "," + i + ")");
+					
+					Music effect = new Music ("effect.mp3",false);
+					effect.start();
 				}
 
 		// Updates the list of ships that can shoot the player.
