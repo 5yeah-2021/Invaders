@@ -2,6 +2,7 @@ package screen;
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import engine.Cooldown;
@@ -70,6 +71,7 @@ public class GameScreen extends Screen {
 	private boolean levelFinished;
 	/** Checks if a bonus life is received. */
 	private boolean bonusLife;
+	Random rnd = new Random();
 
 	/**
 	 * Constructor, establishes the properties of the screen.
@@ -289,6 +291,12 @@ public class GameScreen extends Screen {
 						this.shipsDestroyed++;
 						this.enemyShipFormation.destroy(enemyShip);
 						recyclable.add(bullet);
+						if (rnd.nextInt(10) == 0) {
+							Ship.setBULLET_SPEED();
+						}
+						if (rnd.nextInt(10) == 0) {
+							Ship.setmanybullet();
+						}
 					}
 				if (this.enemyShipSpecial != null
 						&& !this.enemyShipSpecial.isDestroyed()
