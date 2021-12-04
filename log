@@ -1,21 +1,30 @@
-[INFO|11:32:42]: Started loading resources. 
-[FINE|11:32:42]: Sprite Ship loaded. 
-[FINE|11:32:42]: Sprite ShipDestroyed loaded. 
-[FINE|11:32:42]: Sprite Bullet loaded. 
-[FINE|11:32:42]: Sprite EnemyBullet loaded. 
-[FINE|11:32:42]: Sprite EnemyShipA1 loaded. 
-[FINE|11:32:42]: Sprite EnemyShipA2 loaded. 
-[FINE|11:32:42]: Sprite EnemyShipB1 loaded. 
-[FINE|11:32:42]: Sprite EnemyShipB2 loaded. 
-[FINE|11:32:42]: Sprite EnemyShipC1 loaded. 
-[FINE|11:32:42]: Sprite EnemyShipC2 loaded. 
-[FINE|11:32:42]: Sprite EnemyShipSpecial loaded. 
-[FINE|11:32:42]: Sprite Explosion loaded. 
-[INFO|11:32:42]: Finished loading the sprites. 
-[INFO|11:32:43]: Finished loading the fonts. 
-[INFO|11:32:43]: Starting 448x520 title screen at 60 fps. 
-[INFO|11:32:44]: Closing title screen. 
-[INFO|11:32:44]: Starting 448x520 game screen at 60 fps. 
-[INFO|11:32:44]: Initializing 5x4 ship formation in (20,100) 
-[INFO|11:32:51]: Destroyed ship in (4,3) 
-[INFO|11:32:51]: Removed enemy 3 from column 4 
+[INFO|4:42:50]: Started loading resources. 
+[FINE|4:42:50]: Sprite Ship loaded. 
+[FINE|4:42:50]: Sprite ShipDestroyed loaded. 
+[FINE|4:42:50]: Sprite Bullet loaded. 
+[FINE|4:42:50]: Sprite EnemyBullet loaded. 
+[FINE|4:42:50]: Sprite EnemyShipA1 loaded. 
+[FINE|4:42:50]: Sprite EnemyShipA2 loaded. 
+[FINE|4:42:50]: Sprite EnemyShipB1 loaded. 
+[FINE|4:42:50]: Sprite EnemyShipB2 loaded. 
+[FINE|4:42:50]: Sprite EnemyShipC1 loaded. 
+[FINE|4:42:50]: Sprite EnemyShipC2 loaded. 
+[FINE|4:42:50]: Sprite EnemyShipSpecial loaded. 
+[FINE|4:42:50]: Sprite Explosion loaded. 
+[FINE|4:42:50]: Sprite Boss loaded. 
+[INFO|4:42:50]: Finished loading the sprites. 
+[INFO|4:42:50]: Finished loading the fonts. 
+[INFO|4:42:50]: Starting 448x520 title screen at 60 fps. 
+[INFO|4:42:51]: Closing title screen. 
+[INFO|4:42:51]: Starting 448x520 game screen at 60 fps. 
+[INFO|4:42:51]: Initializing 5x4 ship formation in (20,100) 
+[INFO|4:42:58]: Destroyed ship in (4,3) 
+[INFO|4:42:58]: Removed enemy 3 from column 4 
+[INFO|4:43:00]: Destroyed ship in (3,3) 
+[INFO|4:43:00]: Removed enemy 3 from column 3 
+[INFO|4:43:02]: Destroyed ship in (4,2) 
+[INFO|4:43:02]: Removed enemy 2 from column 4 
+[INFO|4:43:05]: A special ship appears 
+[INFO|4:43:06]: Destroyed ship in (1,1) 
+[INFO|4:43:06]: Removed enemy 1 from column 1 
+[INFO|4:43:09]: The special ship has escaped 
