@@ -1,4 +1,4 @@
-package screen;
+	package screen;
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;

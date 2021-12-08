@@ -31,7 +31,6 @@ public class Bullet extends Entity {
 	 */
 	public Bullet(final int positionX, final int positionY, final int speed) {
 		super(positionX, positionY, 3 * 2, 5 * 2, Color.WHITE);
-
 		this.speed = speed;
 		setSprite();
 	}
