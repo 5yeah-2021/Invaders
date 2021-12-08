@@ -5,6 +5,7 @@ import java.util.Set;
 
 import engine.Cooldown;
 import engine.Core;
+import music.Music;
 import engine.DrawManager.SpriteType;
 
 /**
@@ -18,9 +19,10 @@ public class Ship extends Entity {
 	/** Time between shots. */
 	private static final int SHOOTING_INTERVAL = 750;
 	/** Speed of the bullets shot by the ship. */
-	private static final int BULLET_SPEED = -6;
+	private static int BULLET_SPEED = -6;
 	/** Movement of the ship for each unit of time. */
 	private static final int SPEED = 2;
+	private static int manybullet = 1;
 	
 	/** Minimum time between shots. */
 	private Cooldown shootingCooldown;
@@ -80,8 +82,16 @@ public class Ship extends Entity {
 	public final boolean shoot(final Set<Bullet> bullets) {
 		if (this.shootingCooldown.checkFinished()) {
 			this.shootingCooldown.reset();
-			bullets.add(BulletPool.getBullet(positionX + this.width / 2,
+			for (int i = 0; i < manybullet; i++) {
+				if (i % 2 == 0) {
+					bullets.add(BulletPool.getBullet(positionX + this.width / 2 + i * 5,
 					positionY, BULLET_SPEED));
+				}
+				else {
+					bullets.add(BulletPool.getBullet(positionX + this.width / 2 - (i+1) * 5,
+					positionY, BULLET_SPEED));
+				}
+			}
 			return true;
 		}
 		return false;
@@ -109,6 +119,9 @@ public class Ship extends Entity {
 	 */
 	public final void destroy() {
 		this.destructionCooldown.reset();
+		
+		Music effect2 = new Music ("effect2.mp3",false);
+		effect2.start();
 	}
 
 	/**
@@ -127,5 +140,16 @@ public class Ship extends Entity {
 	 */
 	public final int getSpeed() {
 		return SPEED;
+	}
+	
+	public static void setmanybullet() {
+		if (manybullet < 5) {
+			manybullet += 1;
+		}
+	}
+	public static void setBULLET_SPEED() {
+		if (BULLET_SPEED > -18) {
+			BULLET_SPEED -= 1;
+		}
 	}
 }
