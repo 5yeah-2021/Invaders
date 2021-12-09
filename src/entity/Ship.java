@@ -28,6 +28,8 @@ public class Ship extends Entity {
 	private Cooldown shootingCooldown;
 	/** Time spent inactive between hits. */
 	private Cooldown destructionCooldown;
+	private int level;
+	private Color color;
 
 	/**
 	 * Constructor, establishes the ship's properties.
@@ -37,10 +39,19 @@ public class Ship extends Entity {
 	 * @param positionY
 	 *            Initial position of the ship in the Y axis.
 	 */
-	public Ship(final int positionX, final int positionY) {
+	public Ship(int levell, final int positionX, final int positionY) {
 		super(positionX, positionY, 13 * 2, 8 * 2, Color.GREEN);
 
-		this.spriteType = SpriteType.Ship;
+		level = levell;
+
+		/**레벨에 맞는 spritetype지정 */
+		if (level == 1 ) {this.spriteType = SpriteType.Ship;}
+		else if (level == 2){this.spriteType = SpriteType.Ship2;}
+		else if (level == 3 ){this.spriteType = SpriteType.Ship3;}
+		else if (level == 4 ){this.spriteType = SpriteType.Ship4;}
+		else if (level == 5 ){this.spriteType = SpriteType.Ship5;}
+		else if (level == 6 ){this.spriteType = SpriteType.Ship6;}
+		else if (level == 7 ){this.spriteType = SpriteType.Ship7;}
 		this.shootingCooldown = Core.getCooldown(SHOOTING_INTERVAL);
 		this.destructionCooldown = Core.getCooldown(1000);
 	}
@@ -93,7 +104,14 @@ public class Ship extends Entity {
 		if (!this.destructionCooldown.checkFinished())
 			this.spriteType = SpriteType.ShipDestroyed;
 		else
-			this.spriteType = SpriteType.Ship;
+		/**레벨에 맞는 spritetype지정 */
+			if (level == 1 ) {this.spriteType = SpriteType.Ship;}
+			else if (level == 2){this.spriteType = SpriteType.Ship2;}
+			else if (level == 3){this.spriteType = SpriteType.Ship3;}
+			else if (level == 4){this.spriteType = SpriteType.Ship4;}
+			else if (level == 5){this.spriteType = SpriteType.Ship5;}
+			else if (level == 6){this.spriteType = SpriteType.Ship6;}
+			else if (level == 7){this.spriteType = SpriteType.Ship7;}
 	}
 
 	/**
