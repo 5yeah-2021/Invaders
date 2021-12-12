@@ -16,7 +16,6 @@ public class Cooldown {
 	private int duration;
 	/** Beginning time. */
 	private long time;
-
 	/**
 	 * Constructor, established the time until the action can be performed
 	 * again.
@@ -53,7 +52,7 @@ public class Cooldown {
 	 */
 	public final boolean checkFinished() {
 		if ((this.time == 0)
-				|| this.time + this.duration < System.currentTimeMillis())
+				|| this.time + this.duration < System.currentTimeMillis())// ???????
 			return true;
 		return false;
 	}
@@ -62,10 +61,10 @@ public class Cooldown {
 	 * Restarts the cooldown.
 	 */
 	public final void reset() {
-		this.time = System.currentTimeMillis();
+		this.time = System.currentTimeMillis();// ??
 		if (this.variance != 0)
 			this.duration = (this.milliseconds - this.variance)
 					+ (int) (Math.random()
-							* (this.milliseconds + this.variance));
+							* (this.milliseconds + this.variance));// ??
 	}
 }
