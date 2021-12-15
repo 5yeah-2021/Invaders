@@ -239,7 +239,7 @@ public final class Core {
 	 * @return A new cooldown.
 	 */
 	public static Cooldown getCooldown(final int milliseconds) {
-		return new Cooldown(milliseconds);
+		return new Cooldown(milliseconds);//
 	}
 
 	/**

@@ -24,7 +24,8 @@ import entity.Ship;
  *
  */
 public final class DrawManager {
-
+	// 화면 선 RGB color.
+	private static int Bar_color = 200;
 	/** Singleton instance of the class. */
 	private static DrawManager instance;
 	/** Current frame. */
@@ -52,7 +53,7 @@ public final class DrawManager {
 	private static Map<SpriteType, boolean[][]> spriteMap;
 
 	/** Sprite types. */
-	public static enum SpriteType {
+	public static enum SpriteType { 
 		/** Player ship. */
 		Ship,
 		Ship2,
@@ -98,7 +99,7 @@ public final class DrawManager {
 		try {
 			spriteMap = new LinkedHashMap<SpriteType, boolean[][]>();
 
-			spriteMap.put(SpriteType.Ship, new boolean[13][8]);
+			spriteMap.put(SpriteType.Ship, new boolean[13][14]);
 			spriteMap.put(SpriteType.Ship2, new boolean[13][10]);    			//변경
 			spriteMap.put(SpriteType.Ship3, new boolean[17][14]);
 			spriteMap.put(SpriteType.Ship4, new boolean[19][8]);
@@ -106,7 +107,7 @@ public final class DrawManager {
 			spriteMap.put(SpriteType.Ship6, new boolean[21][8]);
 			spriteMap.put(SpriteType.Ship7, new boolean[21][8]);
 
-			spriteMap.put(SpriteType.ShipDestroyed, new boolean[13][8]);
+			spriteMap.put(SpriteType.ShipDestroyed, new boolean[13][14]);
 			spriteMap.put(SpriteType.Bullet, new boolean[3][5]);
 			spriteMap.put(SpriteType.EnemyBullet, new boolean[3][5]);
 			spriteMap.put(SpriteType.EnemyShipA1, new boolean[12][8]);
@@ -158,7 +159,7 @@ public final class DrawManager {
 	/**
 	 * First part of the drawing process. Initialices buffers, draws the
 	 * background and prepares the images.
-	 *
+
 	 * @param screen
 	 *            Screen to draw in.
 	 */
@@ -168,18 +169,25 @@ public final class DrawManager {
 
 		graphics = frame.getGraphics();
 		backBufferGraphics = backBuffer.getGraphics();
-
 		backBufferGraphics.setColor(Color.BLACK);
 		backBufferGraphics
 				.fillRect(0, 0, screen.getWidth(), screen.getHeight());
-
+		int dot_freq = (int)(Math.random()*5);
+		if (dot_freq == 0 || dot_freq == 1) {
+			for(int i=0; i<45; i++) {
+				int color_dot = (int)(Math.random()*80)+70;
+				backBufferGraphics.setColor(new Color(color_dot,color_dot,color_dot));
+				backBufferGraphics
+				.fillRect((int)(Math.random()*448), (int)(Math.random()*518), 2, 2);
+			}
+		}
 		fontRegularMetrics = backBufferGraphics.getFontMetrics(fontRegular);
 		fontBigMetrics = backBufferGraphics.getFontMetrics(fontBig);
 
 		// drawBorders(screen);
 		// drawGrid(screen);
 	}
-
+	
 	/**
 	 * Draws the completed drawing on screen.
 	 *
@@ -207,10 +215,12 @@ public final class DrawManager {
 
 		backBufferGraphics.setColor(entity.getColor());
 		for (int i = 0; i < image.length; i++)
-			for (int j = 0; j < image[i].length; j++)
+			for (int j = 0; j < image[i].length; j++) {				
 				if (image[i][j])
 					backBufferGraphics.drawRect(positionX + i * 2, positionY
 							+ j * 2, 1, 1);
+			}
+		
 	}
 
 	/**
@@ -255,7 +265,7 @@ public final class DrawManager {
 	 */
 	public void drawScore(final Screen screen, final int score) {
 		backBufferGraphics.setFont(fontRegular);
-		backBufferGraphics.setColor(Color.WHITE);
+		backBufferGraphics.setColor(new Color(Bar_color,Bar_color,Bar_color));// 색 수
 		String scoreString = String.format("%04d", score);
 		backBufferGraphics.drawString(scoreString, screen.getWidth() - 60, 25);
 	}
@@ -270,11 +280,12 @@ public final class DrawManager {
 	 */
 	public void drawLives(int level, final Screen screen, final int lives) {
 		backBufferGraphics.setFont(fontRegular);
-		backBufferGraphics.setColor(Color.WHITE);
+		backBufferGraphics.setColor(new Color(Bar_color,Bar_color,Bar_color));
 		backBufferGraphics.drawString(Integer.toString(lives), 20, 25);
 		Ship dummyShip = new Ship(level,0, 0);
 		for (int i = 0; i < lives; i++)
-			drawEntity(dummyShip, 40 + 35 * i, 10);
+			// 남은 생명 아이콘 Y좌표 수정 (초기값 : 10)
+			drawEntity(dummyShip, 40 + 35 * i, 7);
 	}
 
 	/**
@@ -286,10 +297,9 @@ public final class DrawManager {
 	 *            Y coordinate of the line.
 	 */
 	public void drawHorizontalLine(final Screen screen, final int positionY) {
-		backBufferGraphics.setColor(Color.GREEN);
+		backBufferGraphics.setColor(new Color(Bar_color,Bar_color,Bar_color));
 		backBufferGraphics.drawLine(0, positionY, screen.getWidth(), positionY);
-		backBufferGraphics.drawLine(0, positionY + 1, screen.getWidth(),
-				positionY + 1);
+		backBufferGraphics.drawLine(0, positionY + 1, screen.getWidth(), positionY + 1);
 	}
 
 	/**
@@ -307,7 +317,10 @@ public final class DrawManager {
 		drawCenteredRegularString(screen, instructionsString,
 				screen.getHeight() / 2);
 
-		backBufferGraphics.setColor(Color.GREEN);
+		backBufferGraphics.setColor(new Color(0,100,0));
+		drawCenteredBigString(screen, titleString, screen.getHeight() / 3 + 3);
+		
+		backBufferGraphics.setColor(new Color(0,255,0));
 		drawCenteredBigString(screen, titleString, screen.getHeight() / 3);
 	}
 
@@ -557,23 +570,40 @@ public final class DrawManager {
 		backBufferGraphics.setColor(Color.BLACK);
 		backBufferGraphics.fillRect(0, screen.getHeight() / 2 - rectHeight / 2,
 				rectWidth, rectHeight);
-		backBufferGraphics.setColor(Color.GREEN);
+		backBufferGraphics.setColor(new Color(Bar_color-70, Bar_color-70, Bar_color-70));
 		if (number >= 4)
 			if (!bonusLife) {
 				drawCenteredBigString(screen, "Level " + level,
 						screen.getHeight() / 2
+						+ fontBigMetrics.getHeight() / 3 + 3);
+				backBufferGraphics.setColor(new Color(Bar_color+30, Bar_color+30, Bar_color+30));
+				drawCenteredBigString(screen, "Level " + level,
+						screen.getHeight() / 2 
 						+ fontBigMetrics.getHeight() / 3);
 			} else {
 				drawCenteredBigString(screen, "Level " + level
 						+ " - Bonus life!",
 						screen.getHeight() / 2
+						+ fontBigMetrics.getHeight() / 3 + 3);
+				backBufferGraphics.setColor(new Color(Bar_color+30, Bar_color+30, Bar_color+30));
+				drawCenteredBigString(screen, "Level " + level
+						+ " - Bonus life!",
+						screen.getHeight() / 2 
 						+ fontBigMetrics.getHeight() / 3);
 			}
-		else if (number != 0)
+		else if (number != 0) {
+			drawCenteredBigString(screen, Integer.toString(number),
+					screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3 + 3);
+			backBufferGraphics.setColor(new Color(Bar_color+30, Bar_color+30, Bar_color+30));
 			drawCenteredBigString(screen, Integer.toString(number),
 					screen.getHeight() / 2 + fontBigMetrics.getHeight() / 3);
-		else
+		}
+		else {
+			drawCenteredBigString(screen, "GO!", screen.getHeight() / 2
+					+ fontBigMetrics.getHeight() / 3 + 3);
+			backBufferGraphics.setColor(new Color(Bar_color+30, Bar_color+30, Bar_color+30));
 			drawCenteredBigString(screen, "GO!", screen.getHeight() / 2
 					+ fontBigMetrics.getHeight() / 3);
+		}
 	}
 }

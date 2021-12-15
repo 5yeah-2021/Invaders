@@ -39,8 +39,9 @@ public class Ship extends Entity {
 	 * @param positionY
 	 *            Initial position of the ship in the Y axis.
 	 */
+
 	public Ship(int levell, final int positionX, final int positionY) {
-		super(positionX, positionY, 13 * 2, 8 * 2, Color.GREEN);
+		super(positionX, positionY-15, 13 * 2, 14 * 2, new Color(200,0,100));
 
 		level = levell;
 
