@@ -2,6 +2,7 @@
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import engine.Cooldown;
@@ -37,6 +38,10 @@ public class GameScreen extends Screen {
 	private static final int SCREEN_CHANGE_INTERVAL = 1500;
 	/** Height of the interface separation line. */
 	private static final int SEPARATION_LINE_HEIGHT = 40;
+	
+	/** boss monster position**/
+	private int bossX = 10;
+	private int bossY = 50;
 
 	/** Current game difficulty settings. */
 	private GameSettings gameSettings;
@@ -48,6 +53,11 @@ public class GameScreen extends Screen {
 	private Ship ship;
 	/** Bonus enemy ship that appears sometimes. */
 	private EnemyShip enemyShipSpecial;
+	
+	private EnemyShip boss;
+	private Cooldown bossCooldown;
+	private Cooldown bossExplosionCooldown;
+	
 	/** Minimum time between bonus ship appearances. */
 	private Cooldown enemyShipSpecialCooldown;
 	/** Time until bonus ship explosion disappears. */
@@ -70,6 +80,7 @@ public class GameScreen extends Screen {
 	private boolean levelFinished;
 	/** Checks if a bonus life is received. */
 	private boolean bonusLife;
+	Random rnd = new Random();
 
 	/**
 	 * Constructor, establishes the properties of the screen.
@@ -78,7 +89,7 @@ public class GameScreen extends Screen {
 	 *            Current game state.
 	 * @param gameSettings
 	 *            Current game settings.
-	 * @param bonnusLife
+	 * @param bonusLife
 	 *            Checks if a bonus life is awarded this level.
 	 * @param width
 	 *            Screen width.
@@ -111,7 +122,15 @@ public class GameScreen extends Screen {
 
 		enemyShipFormation = new EnemyShipFormation(this.gameSettings);
 		enemyShipFormation.attach(this);
-		this.ship = new Ship(this.width / 2, this.height - 30);
+
+		this.ship = new Ship(level, this.width / 2, this.height - 30);
+		this.boss = new EnemyShip(bossX,bossY);
+		this.bossCooldown = Core.getVariableCooldown(
+				BONUS_SHIP_INTERVAL, BONUS_SHIP_VARIANCE);
+		this.bossCooldown.reset();
+		this.bossExplosionCooldown = Core
+				.getCooldown(BONUS_SHIP_EXPLOSION);
+
 		// Appears each 10-30 seconds.
 		this.enemyShipSpecialCooldown = Core.getVariableCooldown(
 				BONUS_SHIP_INTERVAL, BONUS_SHIP_VARIANCE);
@@ -189,6 +208,58 @@ public class GameScreen extends Screen {
 				this.enemyShipSpecial = null;
 				this.logger.info("The special ship has escaped");
 			}
+			
+			if (this.boss != null) {
+				if (!this.boss.isDestroyed()) {
+					if ((this.boss.getPositionX() < this.width-58)&& this.boss.getPositionY() == bossY)
+						this.boss.move(5,0);
+					else if ((this.boss.getPositionX() >= this.width-58)&& this.boss.getPositionY() == bossY)
+						this.boss.move(0, 50);
+					else if ((this.boss.getPositionX() > 10)&&this.boss.getPositionY() == bossY +50)
+						this.boss.move(-5, 0);
+					else if ((this.boss.getPositionX() >= 10)&& this.boss.getPositionY() == bossY+50)
+						this.boss.move(0,50);
+					else if ((this.boss.getPositionX() < this.width-58)&& this.boss.getPositionY() == bossY +100)
+						this.boss.move(5, 0);
+					else if ((this.boss.getPositionX() >= this.width-58)&& this.boss.getPositionY() == bossY+100)
+						this.boss.move(0, 50);
+					else if ((this.boss.getPositionX() > 10)&&this.boss.getPositionY() == bossY +150)
+						this.boss.move(-5, 0);
+					else if ((this.boss.getPositionX() >= 10)&& this.boss.getPositionY() == bossY+150)
+						this.boss.move(0,50);
+					else if ((this.boss.getPositionX() < this.width-58)&& this.boss.getPositionY() == bossY +200)
+						this.boss.move(5, 0);
+					else if ((this.boss.getPositionX() >= this.width-58)&& this.boss.getPositionY() == bossY+200)
+						this.boss.move(0, 50);
+					else if ((this.boss.getPositionX() > 10)&&this.boss.getPositionY() == bossY +250)
+						this.boss.move(-5, 0);
+					else if ((this.boss.getPositionX() >= 10)&& this.boss.getPositionY() == bossY+250)
+						this.boss.move(0,50);
+					else if ((this.boss.getPositionX() < this.width-58)&& this.boss.getPositionY() == bossY +300)
+						this.boss.move(5, 0);
+					else if ((this.boss.getPositionX() >= this.width-58)&& this.boss.getPositionY() == bossY+300)
+						this.boss.move(0, 50);
+					else if ((this.boss.getPositionX() > 10)&&this.boss.getPositionY() == bossY +350)
+						this.boss.move(-5, 0);
+					else if ((this.boss.getPositionX() >= 10)&& this.boss.getPositionY() == bossY+350)
+						this.boss.move(0,50);
+					else if ((this.boss.getPositionX() < this.width-58)&& this.boss.getPositionY() == bossY +400)
+						this.boss.move(1, 0);
+						
+				
+					
+					if (((this.ship.getPositionX()-48 <= this.boss.getPositionX()) 
+							&& (this.boss.getPositionX() <= this.ship.getPositionX()+24)) 
+							&& (this.boss.getPositionY()+17 == this.ship.getPositionY())) {
+						this.ship.destroy();
+						this.lives--;
+					}
+				} else if (this.bossExplosionCooldown.checkFinished())
+					this.boss = null;
+						
+			}
+				
+				
 
 			this.ship.update();
 			this.enemyShipFormation.update();
@@ -207,8 +278,8 @@ public class GameScreen extends Screen {
 
 		if (this.levelFinished && this.screenFinishedCooldown.checkFinished())
 			this.isRunning = false;
-
-	}
+		}
+	
 
 	/**
 	 * Draws the elements associated with the screen.
@@ -218,11 +289,16 @@ public class GameScreen extends Screen {
 
 		drawManager.drawEntity(this.ship, this.ship.getPositionX(),
 				this.ship.getPositionY());
-		if (this.enemyShipSpecial != null)
+		if (this.enemyShipSpecial != null) {
 			drawManager.drawEntity(this.enemyShipSpecial,
 					this.enemyShipSpecial.getPositionX(),
 					this.enemyShipSpecial.getPositionY());
-
+		}
+		if (this.boss != null ) {
+			drawManager.drawEntity(this.boss,
+					this.boss.getPositionX(),
+					this.boss.getPositionY());
+		}
 		enemyShipFormation.draw();
 
 		for (Bullet bullet : this.bullets)
@@ -231,7 +307,7 @@ public class GameScreen extends Screen {
 
 		// Interface.
 		drawManager.drawScore(this, this.score);
-		drawManager.drawLives(this, this.lives);
+		drawManager.drawLives(level,this, this.lives);
 		drawManager.drawHorizontalLine(this, SEPARATION_LINE_HEIGHT - 1);
 
 		// Countdown to game start.
@@ -289,6 +365,12 @@ public class GameScreen extends Screen {
 						this.shipsDestroyed++;
 						this.enemyShipFormation.destroy(enemyShip);
 						recyclable.add(bullet);
+						if (rnd.nextInt(10) == 0) {
+							Ship.setBULLET_SPEED();
+						}
+						if (rnd.nextInt(10) == 0) {
+							Ship.setmanybullet();
+						}
 					}
 				if (this.enemyShipSpecial != null
 						&& !this.enemyShipSpecial.isDestroyed()
@@ -297,6 +379,16 @@ public class GameScreen extends Screen {
 					this.shipsDestroyed++;
 					this.enemyShipSpecial.destroy();
 					this.enemyShipSpecialExplosionCooldown.reset();
+					recyclable.add(bullet);
+				}
+				
+				if (this.boss != null
+						&& !this.boss.isDestroyed()
+						&& checkCollision(bullet, this.boss)) {
+					this.score += this.boss.getPointValue();
+					this.shipsDestroyed++;
+					this.boss.destroy();
+					this.bossExplosionCooldown.reset();
 					recyclable.add(bullet);
 				}
 			}
