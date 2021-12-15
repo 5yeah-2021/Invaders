@@ -2,9 +2,9 @@ package engine;
 
 /**
  * Implements an object that stores a single game's difficulty settings.
- * 
+ *
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
- * 
+ *
  */
 public class GameSettings {
 
@@ -16,10 +16,12 @@ public class GameSettings {
 	private int baseSpeed;
 	/** Frequency of enemy shootings, +/- 30%. */
 	private int shootingFrecuency;
+	/** 현재 레벨*/
+	private int level;
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param formationWidth
 	 *            Width of the level's enemy formation.
 	 * @param formationHeight
@@ -29,12 +31,13 @@ public class GameSettings {
 	 * @param shootingFrecuency
 	 *            Frecuency of enemy shootings, +/- 30%.
 	 */
-	public GameSettings(final int formationWidth, final int formationHeight,
+	public GameSettings(final int level, final int formationWidth, final int formationHeight,
 			final int baseSpeed, final int shootingFrecuency) {
 		this.formationWidth = formationWidth;
 		this.formationHeight = formationHeight;
 		this.baseSpeed = baseSpeed;
 		this.shootingFrecuency = shootingFrecuency;
+		this.level = level;
 	}
 
 	/**
@@ -66,3 +69,4 @@ public class GameSettings {
 	}
 
 }
+//c

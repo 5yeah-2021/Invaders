@@ -5,6 +5,7 @@ import java.awt.Color;
 import engine.Cooldown;
 import engine.Core;
 import engine.DrawManager.SpriteType;
+import music.Music;
 
 /**
  * Implements a enemy ship, to be destroyed by the player.
@@ -42,18 +43,21 @@ public class EnemyShip extends Entity {
 	 */
 	public EnemyShip(final int positionX, final int positionY,
 			final SpriteType spriteType) {
-		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
-
+		// Color 변경 ( 초기값 : WHITE )
+		super(positionX, positionY, 12 * 2, 8 * 2, new Color(80,0,200));
 		this.spriteType = spriteType;
-		this.animationCooldown = Core.getCooldown(500);
+		this.animationCooldown = Core.getCooldown(5);
 		this.isDestroyed = false;
 
 		switch (this.spriteType) {
 		case EnemyShipA1:
+			super.color = new Color(0,80,200);
 		case EnemyShipA2:
 			this.pointValue = A_TYPE_POINTS;
+			
 			break;
 		case EnemyShipB1:
+			super.color = new Color(0,0,220);
 		case EnemyShipB2:
 			this.pointValue = B_TYPE_POINTS;
 			break;
@@ -72,12 +76,21 @@ public class EnemyShip extends Entity {
 	 * known starting properties.
 	 */
 	public EnemyShip() {
-		super(-32, 60, 16 * 2, 7 * 2, Color.RED);
+		super(-32, 60, 16 * 2, 7 * 2, new Color(255,0,255));
 
 		this.spriteType = SpriteType.EnemyShipSpecial;
 		this.isDestroyed = false;
 		this.pointValue = BONUS_TYPE_POINTS;
 	}
+	
+	public EnemyShip(final int positionX, final int positionY) {
+		super(positionX, positionY, 24 * 2, 16 * 2, Color.cyan);
+
+		this.spriteType = SpriteType.Boss;
+		this.isDestroyed = false;
+		this.pointValue = BONUS_TYPE_POINTS;
+	}
+
 
 	/**
 	 * Getter for the score bonus if this ship is destroyed.
@@ -139,6 +152,9 @@ public class EnemyShip extends Entity {
 	public final void destroy() {
 		this.isDestroyed = true;
 		this.spriteType = SpriteType.Explosion;
+		
+		Music effect = new Music ("effect.mp3",false);
+		effect.start();
 	}
 
 	/**
